@@ -226,3 +226,8 @@ def get_animals(
     df_animals.to_csv(DATA_DIR / "chicago_animals.csv", index=False)
 
     return df_animals
+
+if __name__=="__main__":
+    get_animals(
+        type="dog", status="adopted", organization=None, max_pages=None
+    )

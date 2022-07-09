@@ -1,2 +1,4 @@
 pathlib
 pandas
+sqlalchemy
+psycopg2

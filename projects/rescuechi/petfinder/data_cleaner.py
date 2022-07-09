@@ -17,16 +17,24 @@ def calc_los(raw_published_col, raw_status_change_col) -> pd.Series:
         the pet status was changed (presumably from 'adoptable' -> 'adopted')
     Returns
     -------
-    Column with the length of stay for each animal, as an integer with units of number
-    of days
+    DataFrame with columns for:
+        - Length of stay for each animal, as an integer with units of number of days
+        - Published date as a timestamp
+        - Status changed date as a timestamp
     """
 
     published_dt = pd.to_datetime(raw_published_col)
+    published_dt.name = "published_at"
+    
     status_change_dt = pd.to_datetime(raw_status_change_col)
+    status_change_dt.name = "status_changed_at"
 
     los_days = (status_change_dt - published_dt).dt.days
     los_days.name = "los"
-    return los_days
+    
+    los_df = pd.concat([published_dt, status_change_dt, status_change_dt], axis=1)
+    
+    return los_df
 
 def explode_column(col, col_prefix) -> pd.DataFrame:
     """
